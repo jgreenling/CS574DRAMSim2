@@ -39,6 +39,7 @@
 #include "MemorySystem.h"
 #include "AddressMapping.h"
 
+
 #define SEQUENTIAL(rank,bank) (rank*NUM_BANKS)+bank
 
 /* Power computations are localized to MemoryController.cpp */ 
@@ -530,6 +531,11 @@ void MemoryController::update()
 		//
 		//	assuming simple scheduling at the moment
 		//	will eventually add policies here
+		//////////////////////*added scheduling algorithm RR and FS****///
+
+
+
+		////////////////////////**********
 		Transaction *transaction = transactionQueue[i];
 
 		//map address to rank,bank,row,col

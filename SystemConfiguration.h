@@ -146,7 +146,8 @@ enum TraceType
 {
 	k6,
 	mase,
-	misc
+	misc,
+	comm
 };
 
 enum AddressMappingScheme

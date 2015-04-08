@@ -162,6 +162,47 @@ void *parseTraceFileLine(string &line, uint64_t &addr, enum TransactionType &tra
 
 	switch (type)
 	{
+	case comm:
+	{
+		spaceIndex = line.find_first_of(" ", 0);
+
+				ccStr= line.substr(0, spaceIndex);
+				previousIndex = spaceIndex;
+
+				spaceIndex = line.find_first_not_of(" ", previousIndex);
+				cmdStr = line.substr(spaceIndex, line.find_first_of(" ", spaceIndex) - spaceIndex);
+				previousIndex = line.find_first_of(" ", spaceIndex);
+
+				spaceIndex = line.find_first_not_of(" ", previousIndex);
+				addressStr = line.substr(spaceIndex, line.find_first_of(" ", spaceIndex) - spaceIndex);
+
+				if (cmdStr.compare("W")==0)
+				{
+					transType = DATA_WRITE;
+				}
+				else if (cmdStr.compare("R")==0)
+				{
+					transType = DATA_READ;
+				}
+				else
+				{
+					ERROR("== Unknown Command : "<<cmdStr);
+					exit(0);
+				}
+
+				istringstream a(addressStr.substr(2));//gets rid of 0x
+				a>>hex>>addr;
+
+				//if this is set to false, clockCycle will remain at 0, and every line read from the trace
+				//  will be allowed to be issued
+				if (useClockCycle)
+				{
+					istringstream b(ccStr);
+					b>>clockCycle;
+				}
+				break;
+	}
+
 	case k6:
 	{
 		spaceIndex = line.find_first_of(" ", 0);
@@ -455,7 +496,7 @@ int main(int argc, char **argv)
 			paramOverrides = parseParamOverrides(string(optarg)); 
 			break;
 		case 'v':
-			visFilename = new string(optarg);
+			visFilename = new string("results");
 			break;
 		case '?':
 			usage();
@@ -463,7 +504,7 @@ int main(int argc, char **argv)
 			break;
 		}
 	}
-	traceFileName ="traces/k6_aoe_02_short.trc";
+	traceFileName ="traces/comm_5";
 	// get the trace filename
 	string temp = traceFileName.substr(traceFileName.find_last_of("/")+1);
 
@@ -480,6 +521,11 @@ int main(int argc, char **argv)
 	else if (temp=="misc")
 	{
 		traceType = misc;
+	}
+	//added by raul
+	else if (temp=="comm")
+	{
+			traceType = comm;
 	}
 	else
 	{
