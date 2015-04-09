@@ -79,6 +79,8 @@ private:
 	//functions
 	void insertHistogram(unsigned latencyValue, unsigned rank, unsigned bank);
 
+	void scheduling(int schedule);
+	int Sendcommands(int i);
 	//fields
 	MemorySystem *parentMemorySystem;
 
