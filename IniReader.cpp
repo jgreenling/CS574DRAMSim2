@@ -377,7 +377,7 @@ void IniReader::ReadIniFile(string filename, bool isSystemFile)
 				exit(-1);
 			}
 			// skip zero-length lines
-			if (line.size() == 0)
+			if (line.size() == 0 || line == "\r")
 			{
 //					DEBUG("Skipping blank line "<<lineNumber);
 				continue;
@@ -407,7 +407,7 @@ void IniReader::ReadIniFile(string filename, bool isSystemFile)
 			// a line has to have an equals sign
 			if ((equalsIndex = line.find_first_of("=")) == string::npos)
 			{
-				ERROR("Malformed Line "<<lineNumber<<" (missing equals)");
+				ERROR("Malformed Line "<<lineNumber<<" (missing equals) ");
 				abort();
 			}
 			size_t strlen = line.size();

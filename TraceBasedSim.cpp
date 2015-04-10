@@ -415,7 +415,7 @@ int main(int argc, char **argv)
 	TraceType traceType;
 	string traceFileName;
 	string systemIniFilename("system.ini");
-	string deviceIniFilename("ini/DDR3_micron_64M_8B_x4_sg15.ini");
+	string deviceIniFilename("ini/2Gb_x4.ini");
 	string pwdString;
 	string *visFilename = NULL;
 	unsigned megsOfMemory=2048;
