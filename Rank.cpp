@@ -113,11 +113,12 @@ void Rank::receiveFromBus(BusPacket *packet)
 		}
 
 		//get the read data and put it in the storage which delays until the appropriate time (RL)
-#ifndef NO_STORAGE
+//#ifndef NO_STORAGE
 		banks[packet->bank].read(packet);
-#else
+//#else
+		//PRINT("********************************\nNOT CALLING BANK.read!!!!!\n***************************")
 		packet->busPacketType = DATA;
-#endif
+//#endif
 		readReturnPacket.push_back(packet);
 		readReturnCountdown.push_back(RL);
 		break;
@@ -142,11 +143,11 @@ void Rank::receiveFromBus(BusPacket *packet)
 		}
 
 		//get the read data and put it in the storage which delays until the appropriate time (RL)
-#ifndef NO_STORAGE
+//#ifndef NO_STORAGE
 		banks[packet->bank].read(packet);
-#else
+//#else
 		packet->busPacketType = DATA;
-#endif
+//#endif
 
 		readReturnPacket.push_back(packet);
 		readReturnCountdown.push_back(RL);
@@ -277,11 +278,11 @@ void Rank::receiveFromBus(BusPacket *packet)
 				exit(0);
 			}
 		*/
-#ifndef NO_STORAGE
+//#ifndef NO_STORAGE
 		banks[packet->bank].write(packet);
-#else
+//#else
 		// end of the line for the write packet
-#endif
+//#endif
 		delete(packet);
 		break;
 	default:

@@ -35,6 +35,7 @@
 
 #include "Bank.h"
 #include "BusPacket.h"
+#include "PrintMacros.h"
 
 using namespace std;
 using namespace DRAMSim;
@@ -43,7 +44,9 @@ Bank::Bank(ostream &dramsim_log_):
 		currentState(dramsim_log_), 
 		rowEntries(NUM_COLS),
 		dramsim_log(dramsim_log_)
-{}
+{numReads = 0;
+numHits = 0;
+rowLastRead = -1;}
 
 /* The bank class is just a glorified sparse storage data structure
  * that keeps track of written data in case the simulator wants a
@@ -81,6 +84,9 @@ Bank::DataStruct *Bank::searchForRow(unsigned row, DataStruct *head)
 
 void Bank::read(BusPacket *busPacket)
 {
+	/*For row buffer hit - JG*/
+	numReads++;
+
 	DataStruct *rowHeadNode = rowEntries[busPacket->column];
 	DataStruct *foundNode = NULL;
 
@@ -97,8 +103,13 @@ void Bank::read(BusPacket *busPacket)
 		busPacket->data = foundNode->data;
 	}
 
+	/*For row buffer hit - JG*/
+	if(busPacket->row == rowLastRead)
+		numHits++;
+
 	//the return packet should be a data packet, not a read packet
 	busPacket->busPacketType = DATA;
+
 }
 
 
@@ -107,11 +118,18 @@ void Bank::write(const BusPacket *busPacket)
 	//TODO: move all the error checking to BusPacket so once we have a bus packet,
 	//			we know the fields are all legal
 
+	/*For row buffer hit - JG*/
+	numReads++;
+
 	if (busPacket->column >= NUM_COLS)
 	{
 		ERROR("== Error - Bus Packet column "<< busPacket->column <<" out of bounds");
 		exit(-1);
 	}
+
+	/*For row buffer hit - JG*/
+	if(busPacket->row == rowLastRead)
+		numHits++;
 
 	// head of the list we need to search
 	DataStruct *rowHeadNode = rowEntries[busPacket->column];

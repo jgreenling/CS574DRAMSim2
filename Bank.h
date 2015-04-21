@@ -69,6 +69,11 @@ public:
 	//fields
 	BankState currentState;
 
+	/*For row buffer hit - JG*/
+	int numReads;
+	int numHits;
+	int rowLastRead;
+
 private:
 	// private member
 	std::vector<DataStruct *> rowEntries;

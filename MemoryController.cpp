@@ -856,6 +856,35 @@ void MemoryController::printStats(bool finalStats)
 	cout.setf(ios::fixed,ios::floatfield);
 #endif
 
+	/*For row buffer hit - JG*/
+	for(std::vector<int>::size_type i = 0; i != ranks->size(); i++){
+		for(std::vector<int>::size_type j = 0; j != (*ranks)[i]->banks.size(); j++){
+			Bank bank = (*ranks)[i]->banks[j];
+			if(bank.numReads == 0)
+				{
+				PRINT("numReads was zero\n");
+				continue;
+				}
+			PRINT((float)(bank.numHits)/(float)(bank.numReads));
+		}
+	}
+
+	/*
+	for(std::vector<Rank *>::iterator it = ranks->begin(); it != ranks->end(); ++it){
+		for(std::vector<Bank>::iterator bank = it->banks.begin(); bank != it->banks.end(); ++bank){
+			PRINTN((bank.numHits)/(bank.numReads));
+		}
+	}
+	*/
+	/*
+	for(auto i = ranks->begin(); i != ranks->end(); i++)
+	{
+		for(auto j = i->banks.begin(); j != i->banks.end(); j++)
+		{
+			PRINTN((j.numHits)/(j.numReads));
+		}
+	}
+	*/
 	PRINT( " =======================================================" );
 	PRINT( " ============== Printing Statistics [id:"<<parentMemorySystem->systemID<<"]==============" );
 	PRINTN( "   Total Return Transactions : " << totalTransactions );
