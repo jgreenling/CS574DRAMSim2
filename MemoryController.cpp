@@ -64,7 +64,7 @@ using namespace DRAMSim;
 bool done=false;
 
 ////*VARS FOR RR
-int quantum = 5;
+int quantum = 50;
 int qcount =0 ;
 int doreads=0;
 MemoryController::MemoryController(MemorySystem *parent, CSVWriter &csvOut_, ostream &dramsim_log_) :
@@ -543,7 +543,7 @@ void MemoryController::update()
 		///moved code to scheduling function below
 	if (transactionQueue.size() > 0)
 	{
-		 //1 is for FSFC
+		 //1 is for FcFs
 		//2 is for RR
 		int sched=2;
 		if (sched==1)
@@ -710,7 +710,6 @@ void MemoryController::update()
 		delete returnTransaction[0];
 		returnTransaction.erase(returnTransaction.begin());
 	}
-
 	//decrement refresh counters
 	for (size_t i=0;i<NUM_RANKS;i++)
 	{

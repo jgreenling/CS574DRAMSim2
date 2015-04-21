@@ -415,10 +415,10 @@ int main(int argc, char **argv)
 	TraceType traceType;
 	string traceFileName;
 	string systemIniFilename("system.ini");
-	string deviceIniFilename("ini/2Gb_x4.ini");
+	string deviceIniFilename("ini/1Gb_x4.ini");
 	string pwdString;
 	string *visFilename = NULL;
-	unsigned megsOfMemory=2048;
+	unsigned megsOfMemory=4096;
 	bool useClockCycle=true;
 	
 	IniReader::OverrideMap *paramOverrides = NULL; 

@@ -373,6 +373,9 @@ void MultiChannelMemorySystem::update()
 
 
 }
+
+int dones[4];
+int count;
 void MultiChannelMemorySystem::actual_update() 
 {
 	if (currentClockCycle == 0)
@@ -390,20 +393,51 @@ void MultiChannelMemorySystem::actual_update()
 		}
 		csvOut->finalize();
 	}
-	
-	for (size_t i=0; i<NUM_CHANS; i++)
-	{
-		//std::cout<<"is Done***" << channels[i]->memoryController->IsDone();
-		if (channels[i]->memoryController->IsDone()==false)
-			this->Done=false;
-		else
-			this->Done=true;
 
-		channels[i]->update(); 
+	///make sure all channel are done ...not sure why it works
+	///raul code
+	if (NUM_CHANS>1)
+	{
+		for (size_t i=0; i<NUM_CHANS; i++)
+		{
+			//std::cout<<"is Done***" << channels[i]->memoryController->IsDone();
+			if (channels[i]->memoryController->IsDone()==true)
+			{
+				count=count +1;
+				dones[i]=1;
+				//this->Done=false;
+			}
+
+
+			channels[i]->update();
+		}
+		bool bd=true;
+		for (int j=0; j <NUM_CHANS;j++ )
+		{
+			if (dones[j]==1 )
+			{
+				this->Done=bd;
+
+			}
+		}
+	}
+	else
+	{
+		for (size_t i=0; i<NUM_CHANS; i++)
+		{
+			channels[i]->update();
+			if (channels[i]->memoryController->IsDone()==false)
+			{
+				this->Done=false;
+
+			}
+			else
+				this->Done=true;
+
+
+		}
 
 	}
-
-
 	currentClockCycle++; 
 }
 unsigned MultiChannelMemorySystem::findChannelNumber(uint64_t addr)
