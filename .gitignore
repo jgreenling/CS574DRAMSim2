@@ -1,4 +1,9 @@
 results/
+default/
+.cproject
+.dep/
+.project
+.settings/
 *.o
 *.po
 *.dep

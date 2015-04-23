@@ -1,4 +1,12 @@
 eclipse.preferences.version=1
+environment/buildEnvironmentInclude/0.2139471309/CPATH/delimiter=;
+environment/buildEnvironmentInclude/0.2139471309/CPATH/operation=remove
+environment/buildEnvironmentInclude/0.2139471309/CPLUS_INCLUDE_PATH/delimiter=;
+environment/buildEnvironmentInclude/0.2139471309/CPLUS_INCLUDE_PATH/operation=remove
+environment/buildEnvironmentInclude/0.2139471309/C_INCLUDE_PATH/delimiter=;
+environment/buildEnvironmentInclude/0.2139471309/C_INCLUDE_PATH/operation=remove
+environment/buildEnvironmentInclude/0.2139471309/append=true
+environment/buildEnvironmentInclude/0.2139471309/appendContributed=true
 environment/buildEnvironmentInclude/cdt.managedbuild.toolchain.gnu.mingw.base.1681180115/CPATH/delimiter=;
 environment/buildEnvironmentInclude/cdt.managedbuild.toolchain.gnu.mingw.base.1681180115/CPATH/operation=remove
 environment/buildEnvironmentInclude/cdt.managedbuild.toolchain.gnu.mingw.base.1681180115/CPLUS_INCLUDE_PATH/delimiter=;
@@ -7,6 +15,10 @@ environment/buildEnvironmentInclude/cdt.managedbuild.toolchain.gnu.mingw.base.16
 environment/buildEnvironmentInclude/cdt.managedbuild.toolchain.gnu.mingw.base.1681180115/C_INCLUDE_PATH/operation=remove
 environment/buildEnvironmentInclude/cdt.managedbuild.toolchain.gnu.mingw.base.1681180115/append=true
 environment/buildEnvironmentInclude/cdt.managedbuild.toolchain.gnu.mingw.base.1681180115/appendContributed=true
+environment/buildEnvironmentLibrary/0.2139471309/LIBRARY_PATH/delimiter=;
+environment/buildEnvironmentLibrary/0.2139471309/LIBRARY_PATH/operation=remove
+environment/buildEnvironmentLibrary/0.2139471309/append=true
+environment/buildEnvironmentLibrary/0.2139471309/appendContributed=true
 environment/buildEnvironmentLibrary/cdt.managedbuild.toolchain.gnu.mingw.base.1681180115/LIBRARY_PATH/delimiter=;
 environment/buildEnvironmentLibrary/cdt.managedbuild.toolchain.gnu.mingw.base.1681180115/LIBRARY_PATH/operation=remove
 environment/buildEnvironmentLibrary/cdt.managedbuild.toolchain.gnu.mingw.base.1681180115/append=true
