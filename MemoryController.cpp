@@ -114,6 +114,8 @@ MemoryController::MemoryController(MemorySystem *parent, CSVWriter &csvOut_, ost
 	for (size_t i=0;i<NUM_RANKS;i++)
 	{
 		refreshCountdown.push_back((int)((REFRESH_PERIOD/tCK)/NUM_RANKS)*(i+1));
+
+		//std::cout<<"refresh countdown"<<refreshCountdown[i];
 	}
 
 }
@@ -301,6 +303,7 @@ void MemoryController::update()
 	// else pop from command queue if it's not empty
 	if (refreshCountdown[refreshRank]==0)
 	{
+		std::cout<<"refresh countdown " << refreshCountdown[refreshRank] ;
 		commandQueue.needRefresh(refreshRank);
 		(*ranks)[refreshRank]->refreshWaiting = true;
 		refreshCountdown[refreshRank] =	 REFRESH_PERIOD/tCK;
@@ -545,7 +548,7 @@ void MemoryController::update()
 	{
 		 //1 is for FcFs
 		//2 is for RR
-		int sched=2;
+		int sched=1;
 		if (sched==1)
 			scheduling(1);
 		else
@@ -713,7 +716,9 @@ void MemoryController::update()
 	//decrement refresh counters
 	for (size_t i=0;i<NUM_RANKS;i++)
 	{
+
 		refreshCountdown[i]--;
+
 	}
 
 	//
@@ -906,7 +911,7 @@ void MemoryController::printStats(bool finalStats)
 		// factor of 1000 at the end is to account for the fact that totalEnergy is accumulated in mJ since IDD values are given in mA
 		backgroundPower[r] = ((double)backgroundEnergy[r] / (double)(cyclesElapsed)) * Vdd / 1000.0;
 		burstPower[r] = ((double)burstEnergy[r] / (double)(cyclesElapsed)) * Vdd / 1000.0;
-		refreshPower[r] = ((double) refreshEnergy[r] / (double)(cyclesElapsed)) * Vdd / 1000.0;
+		refreshPower[r] = ((double) refreshEnergy[r] / (double)(cyclesElapsed)) * Vdd ;
 		actprePower[r] = ((double)actpreEnergy[r] / (double)(cyclesElapsed)) * Vdd / 1000.0;
 		averagePower[r] = ((backgroundEnergy[r] + burstEnergy[r] + refreshEnergy[r] + actpreEnergy[r]) / (double)cyclesElapsed) * Vdd / 1000.0;
 
