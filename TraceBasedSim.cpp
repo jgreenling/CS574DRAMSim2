@@ -423,7 +423,8 @@ int main(int argc, char **argv)
 	
 	IniReader::OverrideMap *paramOverrides = NULL; 
 
-	unsigned numCycles=80;
+	unsigned numCycles=6240; //this is number of cycle to run for
+
 	//getopt stuff
 	while (1)
 	{
@@ -591,7 +592,7 @@ int main(int argc, char **argv)
 	bool end=false;
 	size_t i=0;
 	while(end==false)
-	//for (size_t i=0;i<=numCycles;i++)
+	//for (size_t i=0;i<=numCycles;i++) ////Farhana i change this to fun with 6240 cycles
 	{
 		PRINT("\n"<<"I " << i <<" PENDING TRANS "<<pendingTrans <<" CLOCKCYCLE " << clockCycle);
 		if (!pendingTrans)
@@ -667,7 +668,7 @@ int main(int argc, char **argv)
 
 		}
 
-		i++;
+		i++; // uncomment this to run infite amount of instructions/cycles
 
 	}
 
