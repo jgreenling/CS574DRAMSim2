@@ -2,20 +2,20 @@
 *  Copyright (c) 2010-2011, Elliott Cooper-Balis
 *                             Paul Rosenfeld
 *                             Bruce Jacob
-*                             University of Maryland 
+*                             University of Maryland
 *                             dramninjas [at] gmail [dot] com
 *  All rights reserved.
-*  
+*
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions are met:
-*  
+*
 *     * Redistributions of source code must retain the above copyright notice,
 *        this list of conditions and the following disclaimer.
-*  
+*
 *     * Redistributions in binary form must reproduce the above copyright notice,
 *        this list of conditions and the following disclaimer in the documentation
 *        and/or other materials provided with the distribution.
-*  
+*
 *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -41,7 +41,7 @@ using namespace std;
 using namespace DRAMSim;
 
 Bank::Bank(ostream &dramsim_log_):
-		currentState(dramsim_log_), 
+		currentState(dramsim_log_),
 		rowEntries(NUM_COLS),
 		dramsim_log(dramsim_log_)
 {numReads = 0;
@@ -60,7 +60,7 @@ rowLastRead = -1;}
  *
  * read() searches for a node with the right row value, if not found
  * 	returns the tracer value 0xDEADBEEF
- * 
+ *
  *	TODO: if anyone wants to actually store data, see the 'data_storage' branch and perhaps try to merge that into master
  */
 
@@ -104,8 +104,13 @@ void Bank::read(BusPacket *busPacket)
 	}
 
 	/*For row buffer hit - JG*/
-	if(busPacket->row == rowLastRead)
+	PRINTN("Read row " << busPacket->row << " and active row " << rowLastRead << "\n");
+	if(busPacket->row == rowLastRead){
 		numHits++;
+		PRINTN("Incremented number of hits");
+	}
+
+	rowLastRead = busPacket->row;
 
 	//the return packet should be a data packet, not a read packet
 	busPacket->busPacketType = DATA;

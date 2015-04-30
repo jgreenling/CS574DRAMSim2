@@ -2,20 +2,20 @@
 *  Copyright (c) 2010-2011, Elliott Cooper-Balis
 *                             Paul Rosenfeld
 *                             Bruce Jacob
-*                             University of Maryland 
+*                             University of Maryland
 *                             dramninjas [at] gmail [dot] com
 *  All rights reserved.
-*  
+*
 *  Redistribution and use in source and binary forms, with or without
 *  modification, are permitted provided that the following conditions are met:
-*  
+*
 *     * Redistributions of source code must retain the above copyright notice,
 *        this list of conditions and the following disclaimer.
-*  
+*
 *     * Redistributions in binary form must reproduce the above copyright notice,
 *        this list of conditions and the following disclaimer in the documentation
 *        and/or other materials provided with the distribution.
-*  
+*
 *  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 *  ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
 *  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
@@ -42,7 +42,7 @@
 
 #define SEQUENTIAL(rank,bank) (rank*NUM_BANKS)+bank
 
-/* Power computations are localized to MemoryController.cpp */ 
+/* Power computations are localized to MemoryController.cpp */
 extern unsigned IDD0;
 extern unsigned IDD1;
 extern unsigned IDD2P;
@@ -57,7 +57,7 @@ extern unsigned IDD5;
 extern unsigned IDD6;
 extern unsigned IDD6L;
 extern unsigned IDD7;
-extern float Vdd; 
+extern float Vdd;
 
 using namespace DRAMSim;
 
@@ -352,7 +352,7 @@ void MemoryController::update()
 					PRINT(" ++ Adding Read energy to total energy");
 				}
 				burstEnergy[rank] += (IDD4R - IDD3N) * BL/2 * NUM_DEVICES;
-				if (poppedBusPacket->busPacketType == READ_P) 
+				if (poppedBusPacket->busPacketType == READ_P)
 				{
 					//Don't bother setting next read or write times because the bank is no longer active
 					//bankStates[rank][bank].currentBankState = Idle;
@@ -405,7 +405,7 @@ void MemoryController::update()
 			case WRITE_P:
 			case WRITE:
 				PRINT("WRITE " <<  std::hex << poppedBusPacket->origAddress << std::endl) ;
-				if (poppedBusPacket->busPacketType == WRITE_P) 
+				if (poppedBusPacket->busPacketType == WRITE_P)
 				{
 					bankStates[rank][bank].nextActivate = max(currentClockCycle + WRITE_AUTOPRE_DELAY,
 							bankStates[rank][bank].nextActivate);
@@ -679,14 +679,14 @@ void MemoryController::update()
 
 				delete pendingReadTransactions[i];
 				pendingReadTransactions.erase(pendingReadTransactions.begin()+i);
-				foundMatch=true; 
+				foundMatch=true;
 				break;
 			}
 		}
 		if (!foundMatch)
 		{
 			ERROR("Can't find a matching transaction for 0x"<<hex<<returnTransaction[0]->address<<dec);
-			abort(); 
+			abort();
 		}
 
 		/*code to find end of transactions.*/
@@ -790,7 +790,7 @@ bool MemoryController::addTransaction(Transaction *trans)
 		transactionQueue.push_back(trans);
 		return true;
 	}
-	else 
+	else
 	{
 		return false;
 	}
@@ -864,6 +864,7 @@ void MemoryController::printStats(bool finalStats)
 	for(std::vector<int>::size_type i = 0; i != ranks->size(); i++){
 		for(std::vector<int>::size_type j = 0; j != (*ranks)[i]->banks.size(); j++){
 			Bank bank = (*ranks)[i]->banks[j];
+			PRINTN("Bank " << j << " reads: " << bank.numReads << ", Bank RB hits: " << bank.numHits << "\n");
 			if(bank.numReads == 0)
 				{
 				PRINT("numReads was zero\n");
@@ -894,7 +895,7 @@ void MemoryController::printStats(bool finalStats)
 	PRINTN( "   Total Return Transactions : " << totalTransactions );
 	PRINT( " ("<<totalBytesTransferred <<" bytes) aggregate average bandwidth "<<totalBandwidth<<"GB/s");
 
-	double totalAggregateBandwidth = 0.0;	
+	double totalAggregateBandwidth = 0.0;
 	for (size_t r=0;r<NUM_RANKS;r++)
 	{
 
@@ -943,8 +944,8 @@ void MemoryController::printStats(bool finalStats)
 				totalAggregateBandwidth += bandwidth[SEQUENTIAL(r,b)];
 				csvOut << CSVWriter::IndexedName("Average_Latency",myChannel,r,b) << averageLatency[SEQUENTIAL(r,b)];
 			}
-			csvOut << CSVWriter::IndexedName("Rank_Aggregate_Bandwidth",myChannel,r) << totalRankBandwidth; 
-			csvOut << CSVWriter::IndexedName("Rank_Average_Bandwidth",myChannel,r) << totalRankBandwidth/NUM_RANKS; 
+			csvOut << CSVWriter::IndexedName("Rank_Aggregate_Bandwidth",myChannel,r) << totalRankBandwidth;
+			csvOut << CSVWriter::IndexedName("Rank_Average_Bandwidth",myChannel,r) << totalRankBandwidth/NUM_RANKS;
 		}
 	}
 	if (VIS_FILE_OUTPUT)
@@ -977,7 +978,7 @@ void MemoryController::printStats(bool finalStats)
 			PRINT( " --- Grand Total Bank usage list");
 			for (size_t i=0;i<NUM_RANKS;i++)
 			{
-				PRINT("Rank "<<i<<":"); 
+				PRINT("Rank "<<i<<":");
 				for (size_t j=0;j<NUM_BANKS;j++)
 				{
 					PRINT( "  b"<<j<<": "<<grandTotalBankAccesses[SEQUENTIAL(i,j)]);
